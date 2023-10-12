@@ -16,8 +16,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-}, {timestamps: ture});
+}, {timestamps: true});
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema); //the user ,ust be signular 
+
 
 export default User;

@@ -530,3 +530,26 @@ structure and how requests are handled, making it easier for others to understan
 
 
 _______________________________________Simple test api Created________________________________________________
+
+
+
+Creating a sign up api  - get the info username email and password from the lcient side 
+and we will hash the password and save it inside the db - sign up api route 
+
+sign up is very crual so we will create it another route 
+
+instead of get request liek the previous test api route - here we will use post since its passing to the server 
+
+
+import express from "express";
+const router = express.Router();
+
+router.post("/signup")
+
+
+now we need to wrtie the function 
+
+From auth.router.js if we export default router then we can import authRouter from auth,router.js
+
+we can test this api using a api testing software like insomnia, postman
+today we will use insomnia since its nice interface 
