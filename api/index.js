@@ -18,7 +18,10 @@ mongoose.connect(process.env.MONGO).then(()=> {
 
 const app = express();
 
+
 app.use(express.json());
+
+
 
 app.listen(3000, () => {
     console.log('server running on port 3000!');
@@ -26,4 +29,20 @@ app.listen(3000, () => {
 );
 
 app.use("/api/user", userRouter);
+
 app.use("/api/auth", authRouter);
+
+
+//first parm err captures error from the previous middleware 
+//if not error then the parm is undefined.
+// error-handling middleware. below 
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500; //if no error returned will cause internal server error 
+    const message = err.message || "Internal Server Error";
+    return res.status(statusCode).json({
+        success: false,
+        statusCode, // after es6 if variable and key have same name we can use onlyine 
+        message
+    });
+})
+

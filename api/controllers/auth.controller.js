@@ -1,7 +1,8 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
+import { errorHandler } from "../utils/error.js";
 
-export const signup = async(req, res) => { //when we use awaits we need asyc to make it asynchornous
+export const signup = async(req, res, next) => { //when we use awaits we need asyc to make it asynchornous
     const {username, email, password} = req.body; //destrcting 
 
     const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -12,8 +13,7 @@ export const signup = async(req, res) => { //when we use awaits we need asyc to 
         await newUser.save() //can fai due to network slowness so added awaits
         res.status(201).json("User "+username+" created!");
     }catch(error){
-        res.status(500).json(error.message); //status 500 returns error not logs in console 
-    
+       next(errorHandler(550, 'error from the function'));  //status 500 returns error not logs in console 
     }
 
     
