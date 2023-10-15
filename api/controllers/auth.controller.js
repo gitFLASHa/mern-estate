@@ -13,7 +13,7 @@ export const signup = async(req, res, next) => { //when we use awaits we need as
         await newUser.save() //can fai due to network slowness so added awaits
         res.status(201).json("User "+username+" created!");
     }catch(error){
-       next(errorHandler(550, 'error from the function'));  //status 500 returns error not logs in console 
+       next(error);  //status 500 returns error not logs in console 
     }
 
     

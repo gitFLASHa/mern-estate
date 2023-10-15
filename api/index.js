@@ -30,19 +30,19 @@ app.listen(3000, () => {
 
 app.use("/api/user", userRouter);
 
-app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter); //next* error handler 
 
-
-//first parm err captures error from the previous middleware 
-//if not error then the parm is undefined.
-// error-handling middleware. below 
-app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500; //if no error returned will cause internal server error 
+//next is called inside authrouter, authRouter.signUp> next(errorHandler(550, 'error from the function'));
+app.use(function errorhandler(err, req, res, next) {
+    const statusCode = err.statusCode || 500; //no error then 500
     const message = err.message || "Internal Server Error";
     return res.status(statusCode).json({
         success: false,
-        statusCode, // after es6 if variable and key have same name we can use onlyine 
+        statusCode, // after es6 if variable and key have same name we can use only one is enough.
         message
     });
 })
 
+app._router.stack.forEach((middleware, index) => {
+    console.log(`Middleware ${index + 1}: ${middleware.handle.name || 'anonymous'}`);
+  });
